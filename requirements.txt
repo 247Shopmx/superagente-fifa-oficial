@@ -1,8 +1,8 @@
-pandas==2.2.2
+pandas
 numpy<2.0.0
 scikit-learn
 xgboost
 catboost
-tensorflow
+tensorflow-cpu
 requests
 pytz
