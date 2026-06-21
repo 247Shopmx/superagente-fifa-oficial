@@ -1,28 +1,23 @@
 name: FIFA 2026 OFFICIAL AGENT
-
 on:
-  schedule:
-    - cron: '0 16 * * *' # Ejecuta una vez al día a las 10 AM CDMX (aprox)
   workflow_dispatch:
-
+  schedule:
+    - cron: '0 16 * * *'
 jobs:
   predict:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.12'
-          
+          python-version: '3.11' # Bajamos a 3.11 para máxima compatibilidad con TF y CatBoost
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip setuptools wheel && pip install -r requirements.txt
-          
+          python -m pip install --upgrade pip setuptools wheel
+          pip install -r requirements.txt --no-cache-dir
       - name: Run Superagent Prediction
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: python main.py
